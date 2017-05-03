@@ -158,7 +158,7 @@ namespace Basbakanlik.Strateji.Cayci.Helpers
             switch (type)
             {
                 case MethodType.NotSet:
-                    throw new Exception("Method type should be defined as a know type");
+                    throw new Exception("Method type should be defined as a known type");
                 case MethodType.Post:
                     method = HttpMethod.Post;
                     break;

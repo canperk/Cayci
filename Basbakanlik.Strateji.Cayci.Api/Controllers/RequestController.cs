@@ -1,11 +1,8 @@
 ﻿using Basbakanlik.Strateji.Entities;
 using Basbakanlik.Strateji.Entities.Models;
 using Basbakanlik.Strateji.Provider.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace Basbakanlik.Strateji.Cayci.Api.Controllers

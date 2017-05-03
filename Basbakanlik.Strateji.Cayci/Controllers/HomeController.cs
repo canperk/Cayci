@@ -34,7 +34,7 @@ namespace Basbakanlik.Strateji.Cayci.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(string ddlUser)
+        public ActionResult Login(string ddlUser, string ddlLocation)
         {
             if (!string.IsNullOrEmpty(ddlUser))
             {

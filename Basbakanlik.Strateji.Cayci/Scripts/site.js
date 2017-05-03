@@ -99,6 +99,7 @@
         SGB.SignalR.HubClient.requestSeen = function (id) {
             SGB.ViewModels.MyRequestsViewModel.setAsSeen(id);
         }
+        
         SGB.SignalR.Connection.start();
     }
 })(window, $);
