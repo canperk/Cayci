@@ -6,9 +6,9 @@ namespace Cayci.Helpers
     [HubName("Cayci")]
     public class CayciHub : Hub
     {
-        public void JoinGroup()
+        public void JoinGroup(string groupName)
         {
-
+            Groups.Add(Context.ConnectionId, groupName);
         }
     }
 }

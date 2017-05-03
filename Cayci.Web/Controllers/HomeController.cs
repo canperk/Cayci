@@ -2,10 +2,6 @@
 using Cayci.Entities;
 using Cayci.Entities.Contracts;
 using Cayci.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Cayci.Controllers
@@ -44,6 +40,7 @@ namespace Cayci.Controllers
                 SessionHelper.UserId = result.Result.ID;
                 SessionHelper.DisplayName = result.Result.DisplayName;
                 SessionHelper.IsOnDuty = result.Result.IsOnDuty;
+                SessionHelper.Group = ddlLocation;
             }
             return RedirectToAction("Index", "Home");
         }

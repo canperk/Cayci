@@ -42,6 +42,7 @@
         (function(){
             ko.applyBindings(SGB.ViewModels.MyRequestsViewModel);
             SGB.ViewModels.MyRequestsViewModel.init();
+            SGB.SignalR.joinGroup("@SessionHelper.Group");
         })();
     </script>
 }

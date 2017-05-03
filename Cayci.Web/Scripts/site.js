@@ -28,7 +28,7 @@
     }
 
     SGB.OnError = function (error) {
-        SGB.Notify.Error("Bir Hata Oluştu", "Mesaj :" + error.status + ","+ error.statusText);
+        SGB.Notify.Error("Bir Hata Oluştu", "Mesaj :" + error.status + "," + error.statusText);
     }
 
     SGB.Notify = {};
@@ -45,9 +45,9 @@
     SGB.Notify.ShowApiResult = function (result) {
         var apiResult = JSON.parse(result);
         var message = "";
-        var type = "info"; 
-        var icon = "info"; 
-        
+        var type = "info";
+        var icon = "info";
+
         if (!apiResult.State) {
             type = "info";
             icon = "info";
@@ -77,7 +77,7 @@
         $.Notify({
             caption: title,
             content: message,
-            icon: "<span class='fa fa-"+ icon +"'></span>",
+            icon: "<span class='fa fa-" + icon + "'></span>",
             type: type
         });
     }
@@ -86,7 +86,9 @@
     SGB.SignalR.Connection = $.connection.hub;
     SGB.SignalR.Hub = $.connection.Cayci;
     if (SGB.SignalR.Hub) {
+        var connected = false;
         SGB.SignalR.HubClient = $.connection.Cayci.client;
+        SGB.SignalR.HubServer = $.connection.Cayci.server;
         SGB.SignalR.HubClient.addNewRequest = function () {
             if (!SGB.ViewModels && !SB.ViewModels.TileViewModel) {
                 console.log("1 yeni istek");
@@ -99,8 +101,18 @@
         SGB.SignalR.HubClient.requestSeen = function (id) {
             SGB.ViewModels.MyRequestsViewModel.setAsSeen(id);
         }
-        
-        SGB.SignalR.Connection.start();
+        SGB.SignalR.Connection.start().done(function () {
+            connected = true;
+        });
+
+        SGB.SignalR.joinGroup = function (groupName) {
+            var timer = setInterval(function () {
+                if (connected) {
+                    SGB.SignalR.HubServer.joinGroup(groupName);
+                    clearInterval(timer);
+                }
+            }, 500);
+        }
     }
 })(window, $);
 
@@ -140,7 +152,7 @@
         self.viewDetails = function () {
             var _this = this;
             _this.Checked(true);
-            
+
             SGB.Request.GetData("Caller/GetRequestDetail?id=" + this.Id, function (data) {
                 if (!_this.Clicked) {
                     var p = self.count();
@@ -338,10 +350,10 @@
                 for (var i = 0; i < data.Result.length; i++) {
                     var d = data.Result[i];
                     var obj = {
-                        ID : d.ID,
+                        ID: d.ID,
                         Created: d.Created,
                         Seen: ko.observable(d.Seen),
-                        Details : d.Details
+                        Details: d.Details
                     }
                     self.requests.push(obj);
                 }
@@ -370,7 +382,7 @@ ko.bindingHandlers.dateString = {
             $(element).text("");
         }
         else {
-            var date = moment(valueUnwrapped, "DD-MM-YYYY HH:mm:ss"); 
+            var date = moment(valueUnwrapped, "DD-MM-YYYY HH:mm:ss");
             $(element).text(moment(date).format(pattern));
         }
     }

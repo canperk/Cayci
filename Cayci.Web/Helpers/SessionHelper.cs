@@ -34,6 +34,21 @@ namespace Cayci.Helpers
             }
         }
 
+        public static string Group
+        {
+            get
+            {
+                if (HttpContext.Current.Session["Group"] != null)
+                    return HttpContext.Current.Session["Group"].ToString();
+                else
+                    return null;
+            }
+            set
+            {
+                HttpContext.Current.Session["Group"] = value;
+            }
+        }
+
         public static bool? IsOnDuty
         {
             get
@@ -54,6 +69,7 @@ namespace Cayci.Helpers
             UserId = null;
             DisplayName = null;
             IsOnDuty = null;
+            Group = null;
         }
     }
 }

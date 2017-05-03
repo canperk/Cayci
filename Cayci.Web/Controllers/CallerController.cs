@@ -21,7 +21,7 @@ namespace Cayci.Controllers
         {
             request.UserId = SessionHelper.DisplayName;
             var data = Call((IRequestContract c) => c.NewRequest(request));
-            HubContext.Clients.All.addNewRequest();
+            HubContext.Clients.Group(SessionHelper.Group).addNewRequest();
             return ToJson(data);
         }
 
@@ -38,7 +38,7 @@ namespace Cayci.Controllers
             var result = Call((IRequestContract c) => c.GetWaitingRequestsAsync());
             var items = result as ApiResult<List<UserRequest>>;
             items.Result.ForEach(i => {
-                HubContext.Clients.All.requestSeen(i.ID);
+                HubContext.Clients.Group(SessionHelper.Group).requestSeen(i.ID);
             });
             return ToJson(result);
         }
