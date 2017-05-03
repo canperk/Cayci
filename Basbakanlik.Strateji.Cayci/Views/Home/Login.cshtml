@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Giriş Yap";
+    Layout = null;
+}
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/scriptLibs")
+</head>
+<body class="bg-teal">
+    <div class="login-form padding20 block-shadow" style="opacity: 1; transform: scale(1); transition: 0.5s;">
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            <h1 class="text-light">Giriş Yapın</h1>
+            <hr class="thin">
+            <br>
+            <div class="input-control text full-size" data-role="select">
+                <label for="user_login">Adınız Soyadınız</label>
+                <select id="ddlUser" name="ddlUser" data-bind="foreach:users">
+                    <option data-bind="text:DisplayName, attr:{value:ID}"></option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="input-control text full-size" data-role="select">
+                <label for="user_login">En Yakın Çay Ocağı</label>
+                <select id="ddlLocation" name="ddlLocation" data-bind="foreach:locations">
+                    <option data-bind="text:Name, attr:{value:ID}"></option>
+                </select>
+            </div>
+            <br>
+            <br>
+            <div class="form-actions">
+                <button type="submit" class="button primary">Giriş</button>
+            </div>
+        }
+    </div>
+    @Scripts.Render("~/custom")
+    <script>
+        (function () {
+            ko.applyBindings(SGB.ViewModels.LoginViewModel);
+            SGB.ViewModels.LoginViewModel.init();
+        })();
+    </script>
+</body>
+</html>

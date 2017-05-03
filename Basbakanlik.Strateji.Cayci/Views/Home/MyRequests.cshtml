@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Taleplerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Günlük Talepler</h2>
+
+<table class="table hovered bordered tableIcon">
+    <thead>
+        <tr>
+            <th width="200">Talep Tarihi</th>
+            <th>Sipariş Süresi</th>
+            <th>Detay</th>
+            <th>Durumu</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:requests">
+        <tr>
+            <td data-bind="dateString:Created, datePattern: 'DD/MM/YYYY HH:mm:ss'"></td>
+            <td>
+                <time class="timeago" data-bind="attr:{datetime:Created}"></time>
+            </td>
+            <td>
+                <ol data-bind="foreach:Details" class="numeric-list">
+                    <li>
+                        <span data-bind="text:Name"></span>
+                        <span data-bind="text:Count"></span>
+                    </li>
+                </ol>
+            </td>
+            <td>
+                <span class="fa fa-check fg-green" data-bind="visible:Seen()"></span>
+                <span class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom fg-crimson" data-bind="visible:!Seen()"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+        (function(){
+            ko.applyBindings(SGB.ViewModels.MyRequestsViewModel);
+            SGB.ViewModels.MyRequestsViewModel.init();
+        })();
+    </script>
+}

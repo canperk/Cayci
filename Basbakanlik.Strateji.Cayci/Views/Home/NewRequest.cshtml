@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Yeni Talep";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="grid">
+    <div class="row">
+        <div class="tile-container fg-white" data-bind="foreach:tiles">
+            <div class="tile" data-role="tile" data-bind="click:$root.addNewRequest,css:ColorClass">
+                <div class="tile-content iconic">
+                    <span class="icon" data-bind="css:Icon"></span>
+                    <span class="tile-label" data-bind="text:Name"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <table class="table bordered striped hovered">
+                <thead>
+                    <tr>
+                        <th width="200">İstek Türü</th>
+                        <th>Adet</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:requests">
+                    <tr>
+                        <td data-bind="text:Name"></td>
+                        <td data-bind="text:Count"></td>
+                        <td>
+                            <button class="button danger" data-bind="click:Remove">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div data-bind="visible: requests().length == 0">
+                <p class="padding10 bg-active-lighterGray text-enlarged">
+                    Henüz bir talepte bulunmadınız
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row cells12 padding10">
+        <div class="cell colspan6">
+            <label>Talep Notu</label>
+            <div class="input-control textarea full-size" data-role="input" data-text-auto-resize="true" data-text-max-height="200">
+                <textarea style="padding-right: 58px;" data-bind="value:notes"></textarea>
+                <button class="button success" data-bind="click:SaveAll"><span class="fa fa-paper-plane"></span> Gönder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-role="dialog" data-overlay="true" data-overlay-click-close="true" data-close-button="true" data-width="400" data-overlay-color="op-dark" id="dialog" style="padding:10px;top:30px">
+    <h1>Seçenekler</h1>
+    <p>
+        <table class="table bordered">
+            <thead>
+                <tr>
+                    <th>Tür</th>
+                    <th>Adet</th>
+                    <th width="130"></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:selected.Options">
+                <tr>
+                    <td>
+                        <span data-bind="text:Name"></span>
+                    </td>
+                    <td>
+                        <span data-bind="text:Count"></span>
+                    </td>
+                    <td>
+                        <button class="button primary" data-bind="click:Plus">
+                            <span class="fa fa-plus"></span>
+                        </button>
+                        <button class="button primary" data-bind="click:Minus">
+                            <span class="fa fa-minus"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </p>
+    <button class="button primary" data-bind="click:selected.Save">Kaydet</button>
+</div>
+
+@section scripts
+{
+    <script>
+        (function () {
+            ko.applyBindings(SGB.ViewModels.RequestViewModel);
+            SGB.ViewModels.RequestViewModel.init();
+        })();
+    </script>
+}
+

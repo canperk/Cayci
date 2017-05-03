@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Ana Sayfa";
+}
+<div class="grid">
+    <div class="row">
+        <div class="cell">
+            <h2>Strateji Geliştirme Başkanlığı - Çaycı </h2>
+        </div>
+    </div>
+    <div class="row cells3">
+        <div class="cell">
+            <div class="tile tile-large bg-crimson fg-white" data-role="tile" data-effect="slideUpDown" data-bind="click:seeAll">
+                <div class="tile-content">
+                    <div class="live-slide">
+                        <div class="tile-content iconic">
+                            <div class="tile-number" data-bind="text:count"></div>
+                            <span class="tile-label">
+                                Bekleyen Talepler
+                            </span>
+                        </div>
+                    </div>
+                    <div class="live-slide">
+                        <div class="tile-content iconic">
+                            <div class="tile-number" data-bind="text:count"></div>
+                            <span class="tile-label">
+                                Bekleyen Talepler
+                            </span>
+                        </div>
+                    </div>
+                    <div class="live-slide">
+                        <div class="tile-content iconic">
+                            <div class="tile-number" data-bind="text:count"></div>
+                            <span class="tile-label">
+                                Bekleyen Talepler
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cell colspan2">
+            <h2>Talepler</h2>
+            <table class="table hovered bordered tableIcon">
+                <thead>
+                    <tr>
+                        <td>Talep Eden</td>
+                        <td>Talep Tarihi</td>
+                        <td>Kontrol Durumu</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:waitingRequests">
+                    <tr data-bind="attr: { rowid : Id}, click:$parent.viewDetails">
+                        <td data-bind="text:UserId"></td>
+                        <td data-bind="dateString:Created, datePattern: 'DD/MM/YYYY HH:mm:ss'"></td>
+                        <td>
+                            <span class="fa fa-check fg-green" data-bind="visible:Checked()"></span>
+                            <span class="fa fa-times fg-crimson" data-bind="visible:!Checked()"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Talep Detayı</h2>
+            <table class="table hovered bordered tableIcon">
+                <thead>
+                    <tr>
+                        <th>Talep</th>
+                        <th width="200">Adet</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:details">
+                    <tr>
+                        <td data-bind="text:Name"></td>
+                        <td data-bind="text:Count"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" data-bind="text:description"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        (function () {
+            ko.applyBindings(SGB.ViewModels.TileViewModel);
+            SGB.ViewModels.TileViewModel.init();
+        })();
+    </script>    
+}
