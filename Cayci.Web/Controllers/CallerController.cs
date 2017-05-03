@@ -20,6 +20,7 @@ namespace Cayci.Controllers
         public JsonResult AddNewRequest(UserRequest request)
         {
             request.UserId = SessionHelper.DisplayName;
+            request.GroupId = SessionHelper.Group;
             var data = Call((IRequestContract c) => c.NewRequest(request));
             HubContext.Clients.Group(SessionHelper.Group).addNewRequest();
             return ToJson(data);
@@ -28,14 +29,14 @@ namespace Cayci.Controllers
         [HttpGet]
         public JsonResult GetRequestCount()
         {
-            var count = Call((IRequestContract c) => c.GetWaitingRequestCountAsync());
+            var count = Call((IRequestContract c) => c.GetWaitingRequestCountAsync(SessionHelper.Group));
             return ToJson(count);
         }
 
         [HttpGet]
         public JsonResult GetWaitingRequests()
         {
-            var result = Call((IRequestContract c) => c.GetWaitingRequestsAsync());
+            var result = Call((IRequestContract c) => c.GetWaitingRequestsAsync(SessionHelper.Group));
             var items = result as ApiResult<List<UserRequest>>;
             items.Result.ForEach(i => {
                 HubContext.Clients.Group(SessionHelper.Group).requestSeen(i.ID);

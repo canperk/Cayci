@@ -34,9 +34,9 @@ namespace Cayci.Api.Controllers
 
         [HttpGet]
         [Route("WaitingRequestsCount")]
-        public async Task<ApiResult<int>> GetWaitingRequestCountAsync()
+        public async Task<ApiResult<int>> GetWaitingRequestCountAsync(string groupId)
         {
-            return await _requestRepo.GetWaitingRequestCountAsync();
+            return await _requestRepo.GetWaitingRequestCountAsync(groupId);
         }
 
         [HttpGet]
@@ -47,9 +47,9 @@ namespace Cayci.Api.Controllers
         }
         [HttpGet]
         [Route("WaitingRequests")]
-        public async Task<ApiResult<List<UserRequest>>> GetWaitingRequestsAsync()
+        public async Task<ApiResult<List<UserRequest>>> GetWaitingRequestsAsync(string groupId)
         {
-            return await _requestRepo.GetWaitingRequests();
+            return await _requestRepo.GetWaitingRequests(groupId);
         }
         [HttpGet]
         [Route("RequestDetail")]

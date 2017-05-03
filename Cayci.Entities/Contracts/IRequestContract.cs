@@ -14,9 +14,9 @@ namespace Cayci.Entities
         [ApiRoute(Path = "NewType", Type = MethodType.Post)]
         Task<ApiResult> NewType(RequestType type);
         [ApiRoute(Path = "WaitingRequestsCount", Type = MethodType.Get)]
-        Task<ApiResult<int>> GetWaitingRequestCountAsync();
+        Task<ApiResult<int>> GetWaitingRequestCountAsync(string groupId);
         [ApiRoute(Path = "WaitingRequests", Type = MethodType.Get)]
-        Task<ApiResult<List<UserRequest>>> GetWaitingRequestsAsync();
+        Task<ApiResult<List<UserRequest>>> GetWaitingRequestsAsync(string groupId);
         [ApiRoute(Path = "Types", Type = MethodType.Get)]
         Task<ApiResult<List<RequestType>>> GetTypes();
         [ApiRoute(Path = "RequestDetail", Type = MethodType.Get)]

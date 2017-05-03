@@ -26,9 +26,9 @@ namespace Cayci.Provider.Repository
             await Context.RequestTypes.InsertOneAsync(type);
         }
 
-        public async Task<ApiResult<int>> GetWaitingRequestCountAsync()
+        public async Task<ApiResult<int>> GetWaitingRequestCountAsync(string groupId)
         {
-            var result = (await Context.UserRequests.FindAsync(new ExpressionFilterDefinition<UserRequest>(i => !i.Checked))).ToList().Count();
+            var result = (await Context.UserRequests.FindAsync(new ExpressionFilterDefinition<UserRequest>(i => !i.Checked && i.GroupId == groupId))).ToList().Count();
             return new ApiResult<int>(result);
         }
 
@@ -39,10 +39,10 @@ namespace Cayci.Provider.Repository
             return new ApiResult<List<RequestType>>(result);
         }
 
-        public async Task<ApiResult<List<UserRequest>>> GetWaitingRequests()
+        public async Task<ApiResult<List<UserRequest>>> GetWaitingRequests(string groupId)
         {
             var sort = new FindOptions<UserRequest> { Sort = Builders<UserRequest>.Sort.Descending("Created") };
-            var result = (await Context.UserRequests.FindAsync(new ExpressionFilterDefinition<UserRequest>(i => !i.Checked), sort)).ToList();
+            var result = (await Context.UserRequests.FindAsync(new ExpressionFilterDefinition<UserRequest>(i => !i.Checked && i.GroupId == groupId), sort)).ToList();
             foreach (var item in result)
             {
                 if (!item.Seen)
