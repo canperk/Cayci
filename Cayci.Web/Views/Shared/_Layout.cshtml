@@ -1,0 +1,44 @@
+﻿@using Cayci.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Çaycı</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/scriptLibs")
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/signalr/hubs"></script>
+</head>
+<body>
+    <div class="app-bar">
+        <a class="app-bar-element" href="/">Strateji Geliştirme Başkanlığı</a>
+        <span class="app-bar-divider"></span>
+        <ul class="app-bar-menu">
+            @if (SessionHelper.IsOnDuty.HasValue && !SessionHelper.IsOnDuty.Value)
+            {
+                <li>@Html.ActionLink("Yeni Talep", "NewRequest", "Home")</li>
+                <li>@Html.ActionLink("Taleplerim", "MyRequests", "Home")</li>
+            }
+        </ul>
+        <div class="app-bar-element place-right">
+            <span class="dropdown-toggle"><span class="fa fa-user" style="font-size:24px;padding-right:10px"></span>@SessionHelper.DisplayName</span>
+            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+                <ul class="unstyled-list fg-dark">
+                    <li>@Html.ActionLink("Çıkış Yap", "LogOut", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        @RenderBody()
+
+    </div>
+    <hr />
+    <div">
+        <p>&copy; @DateTime.Now.Year - T.C. Başbakanlık - Strateji Geliştirme Başkanlığı - Çaycı</p>
+    </div">
+    @Scripts.Render("~/custom")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
