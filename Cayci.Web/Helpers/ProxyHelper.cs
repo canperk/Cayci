@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
@@ -17,7 +18,7 @@ namespace Cayci.Helpers
         {
             _client = new HttpClient()
             {
-                BaseAddress = new Uri("http://localhost:48759")//TODO: read from config file
+                BaseAddress = new Uri(ConfigurationManager.AppSettings["apiaddress"])
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
